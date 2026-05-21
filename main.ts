@@ -3,7 +3,7 @@
 
 declare const Deno: any;
 
-const PSK = "sakljdklajidjaihjijcnlkjnlkawoiuewqiorlkjlkdnjlkcf654656";
+const PSK = "AliRelay_2026_x9#Tq!mP$7L2";
 
 const STRIP_HEADERS = new Set([
   "host",
@@ -67,12 +67,10 @@ Deno.serve(async (req: Request): Promise<Response> => {
     const b64 = (body as any).b;
 
     if (k !== PSK) return Response.json({ e: "unauthorized" }, { status: 401 });
-    if (!/^https?:\/\//i.test(u))
-      return Response.json({ e: "bad_url" }, { status: 400 });
+    if (!/^https?:\/\//i.test(u)) return Response.json({ e: "bad_url" }, { status: 400 });
 
     let payload: Uint8Array | undefined;
-    if (typeof b64 === "string" && b64.length > 0)
-      payload = decodeBase64ToBytes(b64);
+    if (typeof b64 === "string" && b64.length > 0) payload = decodeBase64ToBytes(b64);
     const requestBody = payload ? Uint8Array.from(payload) : undefined;
 
     const resp = await fetch(u, {
